@@ -5,21 +5,19 @@ import {ListJobs} from "../state/action-creators";
 import {Dispatch} from "redux";
 import JobCard from "./JobCard";
 
-import Grid, { GridSpacing } from '@material-ui/core/Grid';
-import {Paper,Container} from '@material-ui/core';
+import {Paper,Container,Grid} from '@material-ui/core';
 
 interface JobProps{
 jobs: JobType[]; 
 loading:boolean;
 error:string;
-ListJobs: ()=>JobType[]
 }
 
  class Jobs extends Component<JobProps> {
 
-    componentDidMount() {
-            this.props.ListJobs()
-      }
+    // componentDidMount() {
+    //         this.props.ListJobs()
+    //   }
     
     render() {
         return (
@@ -27,7 +25,6 @@ ListJobs: ()=>JobType[]
               <Container>
               {this.props.loading && <div>Loading</div> }
               {this.props.error && <div>{this.props.error}</div> }
-              
               {this.props.jobs && <Grid container justify='center' spacing={2}>{this.props.jobs.map(job=>{
                
                 return( 
@@ -45,9 +42,9 @@ loading:boolean;
 error:string;
 }
 
-interface JobDProps{
-    ListJobs:()=>Dispatch |any
-}
+// interface JobDProps{
+//     ListJobs:()=>Dispatch |any
+// }
 
 
 const mapStateToProps=(state:any):JobPropsType=>({
@@ -58,9 +55,9 @@ const mapStateToProps=(state:any):JobPropsType=>({
   
   })
 const MapDispatchToProps=(dispatch:any)=>{
-    return{
-        ListJobs:()=>dispatch(ListJobs())
-    }
+    // return{
+    //     ListJobs:()=>dispatch(ListJobs())
+    // }
 }
   export default connect(
      mapStateToProps,MapDispatchToProps)(Jobs);

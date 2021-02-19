@@ -1,22 +1,42 @@
 import {ActionType} from "../action-types/index";
-import {Actions, JobType} from "../actions";
+import {Actions} from "../actions";
 import {Dispatch} from "redux";
 import axios from "axios";
 
 
-export const ListJobs=()=>{
+
+export const ListJobs=(searchKeyword:string,categoryId:string)=>{
     return async(dispatch:Dispatch<Actions>)=>{
         dispatch(
             {
                 type: ActionType.SEARCH_REPOSITORY_ACTIONS
             });
         try {
-            const {data}= await axios.get('https://job-list-api.herokuapp.com/list');
-            console.log(data,"tu sam");
-            dispatch({
-                type:ActionType.SEARCH_REPOSITORY_SUCCESS,
-                payload:data
-            })
+            if(searchKeyword==="" && categoryId===''){
+                const {data}= await axios.get('https://job-list-api.herokuapp.com/list');
+                dispatch({
+                    type:ActionType.SEARCH_REPOSITORY_SUCCESS,
+                    payload:data
+                });
+
+            }else{
+               if(searchKeyword !=="" && categoryId !== ""){
+                const {data}=await axios.get(`https://job-list-api.herokuapp.com/list?place=${searchKeyword}&categoryId=${categoryId}`);
+
+                
+                dispatch({
+                    type:ActionType.SEARCH_REPOSITORY_SUCCESS,
+                    payload:data
+                })
+               }
+                // const {data}=await axios.get(`https://job-list-api.herokuapp.com/list?place=${searchKeyword}`);
+
+               
+
+            }
+           
+           
+           
             
         } catch (error) {
             dispatch({
