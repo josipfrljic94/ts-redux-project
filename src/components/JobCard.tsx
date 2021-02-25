@@ -32,9 +32,12 @@ const JobCard: React.FC<JobCardProps>= ({job}) => {
         <CardMedia
           className={classes.media}
           image={job.image}
-          title={job.title}
+         
         />
         <CardContent>
+          <Typography>
+          {job.title}
+          </Typography>
             <Typography>
                 {job.place}
             </Typography>

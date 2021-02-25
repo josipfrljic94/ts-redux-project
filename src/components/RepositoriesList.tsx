@@ -1,43 +1,58 @@
-import {useEffect,useState} from "react";
-import { Input,Button } from '@material-ui/core';
+import {useState} from "react";
+import { Input} from '@material-ui/core';
 import {connect} from "react-redux";
 import {JobType} from "../state/actions";
-import { useSelector, useDispatch } from 'react-redux';
 import {ListJobs} from "../state/action-creators";
-import { AnyAction } from "redux";
+
+// MATERIAL UI
+import {InputLabel,Select,FormHelperText,FormControl,NativeSelect} from '@material-ui/core';
+import { BorderOuter, BorderRight } from "@material-ui/icons";
 
 
 
+
+// PROPS OF COMPONENT
 interface JobProps{
- 
-
-ListJobs:(searchKeyword:string,categoryId:string)=>JobType[]
-    // ListJobs: ()=>JobType[]
+jobs:JobType[],
+loading:boolean;
+error:string;
+ListJobs:(searchKeyword:string,place:string)=>JobType[] 
     }
+
 
 const RepositoriesList :React.FC<JobProps> = ({ListJobs}) => {
 
-    // const dispatch = useDispatch();
-    const [searchKeyword, setSearchKeyword] = useState('');
-    const [category, setCategory] = useState('')
+  
 
+    // MANAGE LOCAL STATE
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const [place, setPlace] = useState('');
+    const [places, setPlaces] = useState<string[]>(["Osijek","Rijeka","Slavonski Brod","Split","Zagreb"])
     
-    const FilterHandler=(e:any)=>{
-        e.preventDefault();
-        // dispatch(ListJobs(searchKeyword,category));
-        ListJobs(searchKeyword,category);
+    const FilterHandler=(searchKeyword:any,place:string)=>{
+
+        ListJobs(searchKeyword,place);
        
     }
-   useEffect(() => {
-    // dispatch(ListJobs(searchKeyword,category));
-    ListJobs(searchKeyword,category)
-   }, [])
+const handlePlace=(event: React.ChangeEvent<{ value: any }>)=>{
+    setPlace(event.target.value as string);
+    FilterHandler(searchKeyword,event.target.value)
+}
+
 
     return (
         <form>
-            <Input onChange={(e)=>setSearchKeyword(e.target.value)}/>
-            <Input onChange={(e)=>setCategory(e.target.value)}/>
-            <Button onClick={(e)=>{FilterHandler(e)}}>Add</Button>
+            <Input onChange={(e)=>{setSearchKeyword(e.target.value);FilterHandler(searchKeyword,place)}}/>
+         
+           <select defaultValue="" onChange={handlePlace}>
+              <option  value="">None</option>
+              {places.map(p=>{
+                  return (<option  key={p} value={p}>{p}</option>)
+              })}
+                
+          </select>
+           
+    
         </form>
     )
        
@@ -49,9 +64,6 @@ interface JobPropsType{
     error:string;
     }
     
-    // interface JobDProps{
-    //     ListJobs:(searchKeyword:string,categoryId:string)=>{type:string,payload:JobType[]}
-    // }
     const mapStateToProps=(state:any):JobPropsType=>({
   
         jobs:state.repositories.data,
@@ -66,8 +78,8 @@ interface JobPropsType{
         return{
             ListJobs:(searchKeyword:string,categoryId:string)=>dispatch(ListJobs(searchKeyword,categoryId))
         }
-    }
+       }
 
    export default connect(
-    mapStateToProps,MapDispatchToProps)(RepositoriesList);
+   mapStateToProps,MapDispatchToProps)(RepositoriesList);
  

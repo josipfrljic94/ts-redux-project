@@ -5,31 +5,31 @@ import axios from "axios";
 
 
 
-export const ListJobs=(searchKeyword:string,categoryId:string)=>{
+export const ListJobs=(searchKeyword:string,place:string)=>{
     return async(dispatch:Dispatch<Actions>)=>{
         dispatch(
             {
                 type: ActionType.SEARCH_REPOSITORY_ACTIONS
             });
         try {
-            if(searchKeyword==="" && categoryId===''){
-                const {data}= await axios.get('https://job-list-api.herokuapp.com/list');
+            if( place===''){
+                const {data}= await axios.get(`https://job-list-api.herokuapp.com/list?q=${searchKeyword}`);
                 dispatch({
                     type:ActionType.SEARCH_REPOSITORY_SUCCESS,
                     payload:data
                 });
 
             }else{
-               if(searchKeyword !=="" && categoryId !== ""){
-                const {data}=await axios.get(`https://job-list-api.herokuapp.com/list?place=${searchKeyword}&categoryId=${categoryId}`);
+             
+                const {data}=await axios.get(`https://job-list-api.herokuapp.com/list?q=${searchKeyword}&place=${place}`);
 
                 
                 dispatch({
                     type:ActionType.SEARCH_REPOSITORY_SUCCESS,
                     payload:data
                 })
-               }
-                // const {data}=await axios.get(`https://job-list-api.herokuapp.com/list?place=${searchKeyword}`);
+               
+              
 
                
 

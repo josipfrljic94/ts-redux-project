@@ -1,9 +1,8 @@
 import  { Component } from 'react'
 import {connect} from "react-redux";
 import {JobType} from "../state/actions";
-import {ListJobs} from "../state/action-creators";
-import {Dispatch} from "redux";
 import JobCard from "./JobCard";
+import {ListJobs} from "../state/action-creators";
 
 import {Paper,Container,Grid} from '@material-ui/core';
 
@@ -11,13 +10,19 @@ interface JobProps{
 jobs: JobType[]; 
 loading:boolean;
 error:string;
+ListJobs:(searchKeyword:string,place:string)=>JobType[] ;
 }
 
  class Jobs extends Component<JobProps> {
+    state={
+        searchKeyword:"Zagreb",
+        place:""
+    }
+   
 
-    // componentDidMount() {
-    //         this.props.ListJobs()
-    //   }
+  componentDidMount(){
+   this.props.ListJobs("","");
+  }
     
     render() {
         return (
@@ -36,15 +41,13 @@ error:string;
         )
     }
 }
-interface JobPropsType{
-jobs:JobType[];
-loading:boolean;
-error:string;
-}
 
-// interface JobDProps{
-//     ListJobs:()=>Dispatch |any
-// }
+interface JobPropsType{
+  jobs: JobType[]; 
+  loading:boolean;
+  error:string;
+ 
+  }
 
 
 const mapStateToProps=(state:any):JobPropsType=>({
@@ -54,10 +57,11 @@ const mapStateToProps=(state:any):JobPropsType=>({
    error:state.repositories.error
   
   })
-const MapDispatchToProps=(dispatch:any)=>{
-    // return{
-    //     ListJobs:()=>dispatch(ListJobs())
-    // }
-}
+  const MapDispatchToProps=(dispatch:any)=>{
+    return{
+        ListJobs:(searchKeyword:string,place:string)=>dispatch(ListJobs(searchKeyword,place))
+    }
+   }
+
   export default connect(
      mapStateToProps,MapDispatchToProps)(Jobs);
