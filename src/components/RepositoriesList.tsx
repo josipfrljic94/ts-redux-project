@@ -1,5 +1,5 @@
 import {useState} from "react";
-import { Input} from '@material-ui/core';
+import { Input, MenuItem} from '@material-ui/core';
 import {connect} from "react-redux";
 import {JobType} from "../state/actions";
 import {ListJobs} from "../state/action-creators";
@@ -27,7 +27,7 @@ const RepositoriesList :React.FC<JobProps> = ({ListJobs}) => {
     // MANAGE LOCAL STATE
     const [searchKeyword, setSearchKeyword] = useState('');
     const [place, setPlace] = useState('');
-    const [places, setPlaces] = useState<string[]>(["Osijek","Rijeka","Slavonski Brod","Split","Zagreb"])
+    const [places, setPlaces] = useState<string[]>(["Osijek","Rijeka","Slavonski Brod","Split","Varaždin","Zagreb"])
     
     const FilterHandler=(searchKeyword:any,place:string)=>{
 
@@ -44,13 +44,22 @@ const handlePlace=(event: React.ChangeEvent<{ value: any }>)=>{
         <form>
             <Input onChange={(e)=>{setSearchKeyword(e.target.value);FilterHandler(searchKeyword,place)}}/>
          
-           <select defaultValue="" onChange={handlePlace}>
-              <option  value="">None</option>
-              {places.map(p=>{
-                  return (<option  key={p} value={p}>{p}</option>)
+          
+           <Select
+   labelId="demo-simple-select-required-label"
+   
+   defaultValue={''}
+   onChange={handlePlace}
+
+ >
+   <MenuItem value="">
+     <em>None</em>
+   </MenuItem>
+   {places.map(p=>{
+                  return (<MenuItem  key={p} value={p}><em>{p}</em></MenuItem>)
               })}
-                
-          </select>
+  
+ </Select>
            
     
         </form>
@@ -83,3 +92,4 @@ interface JobPropsType{
    export default connect(
    mapStateToProps,MapDispatchToProps)(RepositoriesList);
  
+  

@@ -15,11 +15,11 @@ export default class Container extends Component<IProps>{
     render() {
        
         return (
-            <StylesProvider injectFirst>
+         
            <CustomButton primary>
                Start
            </CustomButton>
-           </StylesProvider>
+         
         )
     }
 
