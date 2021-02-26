@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {SideBarElement} from './SideBar.style';
 interface SideBarProps{
     open:boolean

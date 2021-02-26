@@ -1,21 +1,79 @@
 import {useState,useEffect} from "react"
-import {Toolbar,Typography,IconButton} from '@material-ui/core/';
+import {Typography,IconButton,Tab} from '@material-ui/core/';
+import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import {NavbarElement,BrandText,ToolBarCustom} from "./Navbar.style";
+import {NavbarElement,BrandText,ToolBarCustom,CustomTabs,CustomIconButton} from "./Navbar.style";
 import Sidebar from "../SideBar/Sidebar";
+import Avatars from "./Avatars";
+
+
+// MATERIAL UI STYLE + CUSTOM STYLED COMPONENTS
+interface StyledTabsProps {
+  value: number;
+  onChange: (event: React.ChangeEvent<{}>, newValue: number) => void;
+}
+
+const StyledTabs = withStyles({
+  flexContainer: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+ 
+  indicator: {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    '& > span': {
+      maxWidth: 40,
+      width: '100%',
+      backgroundColor: '#0080fe',
+    },
+  },
+})((props: StyledTabsProps) => <CustomTabs {...props} TabIndicatorProps={{ children: <span /> }} />);
+
+interface StyledTabProps {
+  label: string;
+}
+
+const StyledTab = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      textTransform: 'none',
+      color: 'black',
+      fontWeight: theme.typography.fontWeightRegular,
+      fontSize: theme.typography.pxToRem(16),
+      marginRight: theme.spacing(1),
+      
+      '&:focus': {
+        opacity: 1,
+        color: '#0080fe',
+        backgroundColor:'#c1c1c1'
+      },
+      '&:hover':{
+        color: '#0080fe'
+      }
+    },
+  }),
+)((props: StyledTabProps) => <Tab disableRipple {...props} />);
+
+
+
 
 
 const Navbar = () => {
     // for sidebar actions
     const [open, setOpen] = useState(false);
 
-    const handleDrawerOpen = () => {
-      setOpen(true);
-    };
+   
   
     const handleDrawerClose = () => {
       setOpen(false);
     };
+    const [tab, setTab] = useState(0);
+
+    const handleChange=(e: React.ChangeEvent<{}>, newValue: number)=>{
+      setTab(newValue);
+    }
 
 const [lapotopSize, setLaptopSize] = useState(true);
 const [windowSize, setWindowSize] = useState<{width:number} | null>(null)
@@ -59,17 +117,25 @@ function handleResize() {
         
         <NavbarElement  primary={lapotopSize}>
         <ToolBarCustom>
-            {!lapotopSize && 
-             <IconButton edge="start"  color="inherit" aria-label="menu">
-            <MenuIcon onClick={()=>setOpen(!open)} />
-            </IconButton>  
-            }
+         
+             <CustomIconButton edge="start"  color="inherit" aria-label="menu" onClick={()=>setOpen(!open)}>
+            <MenuIcon  />
+            </CustomIconButton>  
+           
           <BrandText variant="h4">
             posao.hr
           </BrandText>
-          <BrandText variant="h4">
-            posao.hr
-          </BrandText>
+          <StyledTabs
+        value={tab}
+        onChange={handleChange}
+       
+      >
+        <StyledTab label="Item One" />
+        <StyledTab label="Item Two" />
+        <StyledTab label="Item Three" />
+      </StyledTabs>
+
+         <Avatars/>
         </ToolBarCustom>
         <Sidebar open={open} handleDrawerClose={handleDrawerClose}/>
       </NavbarElement>

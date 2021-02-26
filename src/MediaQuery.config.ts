@@ -1,13 +1,13 @@
 export const breakpoints = {
-    sm: 20,
-    md: 30,
-    lg: 50,
-    xl: 60
+    sm: 576,
+    md: 768,
+    lg: 992,
+    xl: 1200
   };
   
   export const mediaQueries = (key: keyof typeof breakpoints) => {
     return (style: TemplateStringsArray | String) =>
-      `@media (min-width: ${breakpoints[key]}em) { ${style} }`;
+      `@media (min-width: ${breakpoints[key]}px) { ${style} }`;
   };
   
   
