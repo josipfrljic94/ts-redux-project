@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {mediaQueries} from "../../MediaQuery.config";
-import {AppBar,Toolbar,Typography,IconButton,Tabs,Container} from '@material-ui/core/';
+import {AppBar,Toolbar,Typography,IconButton,Tabs,Container,Avatar} from '@material-ui/core/';
 
 
 export const NavbarElement = styled(AppBar)<{ primary?: boolean }>`
@@ -83,8 +83,17 @@ display:flex;
 height:60px;
 width:200px;
 align-items:center;
-flex-grow:0.5;
+flex-grow:1;
 justify-content:space-around;
+`
+export const StyledAvatar = styled(Avatar)`
+padding:0;
+margin:0;
+height:30px;
+width:30px;
+&>img{
+  height:100%;
+}
 `
 
 // linear-gradient(to left,#fc6076,#ff8b1a,#ff5c44);

@@ -1,11 +1,10 @@
 
 import {Provider} from "react-redux";
 import {store,} from "./state";
-import RepositoriesList from "./components/RepositoriesList";
 import { StylesProvider } from '@material-ui/core/styles';
-import Container from "./Style/Container";
 import Jobs from "./components/Jobs";
 import Navbar from "./components/Navbar/Navbar";
+import Banner from "./components/Banner/Banner";
 
 
 
@@ -15,8 +14,7 @@ function App() {
     <Provider store={store}>
        <StylesProvider injectFirst>
         <Navbar/>
-        <Container/>
-        <RepositoriesList/>
+        <Banner/>
         <Jobs/>
         </StylesProvider>
     </Provider>

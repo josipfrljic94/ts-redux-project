@@ -1,13 +1,13 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import {AvatarContainer} from "./Navbar.style";
+import {AvatarContainer,StyledAvatar} from "./Navbar.style";
+import StyledButton from "../Button/StyledButton" 
 interface AvatarsProps{}
 const Avatars:React.FC<AvatarsProps>= ({}) => {
     return (
        <AvatarContainer>
-        <Avatar>H</Avatar>
-      <Avatar >N</Avatar>
-      <Avatar >OP</Avatar>
+       <StyledButton buttontext={"prijava"}/>
+      <StyledAvatar ><img src="https://www.posao.hr/images/hr_lan.png"></img></StyledAvatar>
+      <StyledAvatar ><img src="https://www.posao.hr/images/en_lan.svg"></img></StyledAvatar>
        </AvatarContainer>
     )
 }

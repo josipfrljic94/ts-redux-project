@@ -1,12 +1,13 @@
 import {useState} from "react";
-import { Input, MenuItem} from '@material-ui/core';
 import {connect} from "react-redux";
-import {JobType} from "../state/actions";
-import {ListJobs} from "../state/action-creators";
-
+import {JobType} from "../../state/actions";
+import {ListJobs} from "../../state/action-creators";
+import {StyledForm,StyledInput} from "./RepositoriesList.style";
 // MATERIAL UI
-import {InputLabel,Select,FormHelperText,FormControl,NativeSelect} from '@material-ui/core';
-import { BorderOuter, BorderRight } from "@material-ui/icons";
+
+
+import { TextField} from '@material-ui/core';
+import {FormControl,FormGroup} from '@material-ui/core';
 
 
 
@@ -41,28 +42,43 @@ const handlePlace=(event: React.ChangeEvent<{ value: any }>)=>{
 
 
     return (
-        <form>
-            <Input onChange={(e)=>{setSearchKeyword(e.target.value);FilterHandler(searchKeyword,place)}}/>
+        <FormControl>
+         <StyledForm>
+
+            <StyledInput
+         
+          id="place-input"
+          label="Search keyword..."
+          type="text"
+          autoComplete=""
+          onChange={(e)=>{setSearchKeyword(e.target.value);FilterHandler(searchKeyword,place)}}
+          InputProps={{ disableUnderline: true }} 
+        />
          
           
-           <Select
-   labelId="demo-simple-select-required-label"
-   
-   defaultValue={''}
-   onChange={handlePlace}
-
+           <StyledInput
+ id="standard-select-place"
+ select
+ label="Filter place"
+ defaultValue=''
+ onChange={handlePlace}
+ InputProps={{ disableUnderline: true }} 
+ SelectProps={{
+   native: true,
+ }}
+//  helperText="Filter place"  
  >
-   <MenuItem value="">
-     <em>None</em>
-   </MenuItem>
+   <option value="">
+    
+   </option>
    {places.map(p=>{
-                  return (<MenuItem  key={p} value={p}><em>{p}</em></MenuItem>)
+                  return (<option  key={p} value={p}>{p}</option>)
               })}
   
- </Select>
+ </StyledInput>
            
-    
-        </form>
+   </StyledForm>
+        </FormControl>
     )
        
     

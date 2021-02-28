@@ -26,7 +26,7 @@ const StyledTabs = withStyles({
     '& > span': {
       maxWidth: 40,
       width: '100%',
-      backgroundColor: '#0080fe',
+      backgroundColor: '#238af1',
     },
   },
 })((props: StyledTabsProps) => <CustomTabs {...props} TabIndicatorProps={{ children: <span /> }} />);
@@ -46,11 +46,12 @@ const StyledTab = withStyles((theme: Theme) =>
       
       '&:focus': {
         opacity: 1,
-        color: '#0080fe',
-        backgroundColor:'#c1c1c1'
+        color: '#238af1',
+        backgroundColor:'#dfdfdf',
+        height:'60px'
       },
       '&:hover':{
-        color: '#0080fe'
+        color: '#238af1'
       }
     },
   }),
@@ -136,6 +137,7 @@ function handleResize() {
       </StyledTabs>
 
          <Avatars/>
+
         </ToolBarCustom>
         <Sidebar open={open} handleDrawerClose={handleDrawerClose}/>
       </NavbarElement>
